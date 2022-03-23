@@ -1,0 +1,26 @@
+language: python
+python:
+- '3.9'
+branches:
+  only: master
+install:
+- pip install awscli
+- pip install aws-sam-cli
+script:
+- sam validate
+- sam package --template-file template.yaml --s3-bucket serge-test-23032022 --output-template-file
+  packaged.yaml
+deploy:
+  provider: script
+  script: sam deploy --template-file packaged.yaml --stack-name serge-serverless-test
+  skip_cleanup: true
+  on:
+    branch: master
+notifications:
+  email:
+    on_failure: always
+env:
+  global:
+  - AWS_DEFAULT_REGION=ap-southeast-2
+  - secure: LNe0nsGV+gBHFPmJQEOsQbQ9rHEHE+Vs7+Iba+Iq1TKTxCBCGxS5wZlFyh8aaFbZg7I1cT8CJ96RMXeUEl1Eh2PPCqO7gTXmTlMwa1kg5nlTCIeD0J7NWrXnGmphwONePPtCpI6FnNXiThKnGVD6eBhMdjnxcQESAtEZaQ9EHNLe2rK9Kp9G/Qj0hxIfMSb8eNwO1o1DYJ4k2TnDPfmh/Fa5btt6J3Nc2NUAHwngrLgbGt6PubnoNgAdC09LFbm279x7cMWRuvUtiSgP+xbOL1iRzaNiiGsoD5YpkvhXGQt14XTuWlCvY+dG5K6ONCLBvell0Km7fyyYd94xwuXJJHIgCYhI4Ot0NEAM1qrX9MMMYIbM+OpYLqBzeSyyXjyHS1u+xC4JfUI3w7z7an8rlD3EzYXq4FIQuc/Cg/uydf5kI1lawLPMHIB8l4zt9pVyFknGqRjWSlv1myineRyE+M3FE845JRQ7zszk8ALUpq0osC+dbSbK0s2SmkBE5CWE9B5gnUdUI0llJq0p5z3MSBddhPAp1pE9FQHbMDGars0GEVtXTNJtr73W8+BpyZ87Qp74nRaOSuS4RYJlQI6J2mPkWxlFXrksGS3flRXBPA0x3sP+eX1G4q4meMsWjEgzL/eofW/XIW7qVZ3VB5kj5D+di9wzb2iuYNRootIsS+A=
+  - secure: pbvYtZzIkz936Z5Pi7DIwoXUliSrvQtFUJPQAVI0b3I1mxSB299CyxDvBwQyl5LiDdZiKwUkWG9rSvGBU327A/qEFkZqacV/uvl8UmuxudViWIhtJQC4xgaCu08bWAfEST8piXnSuj4BRNaobAmxEAobbOwcGJZRU+cA6Yc5kqTW1Ktks1VhAiDx8BjSVMGwb1CUdLeCYxYBIrFl5oB5lLyL4cz0oPALBqALgS0fM0baMm49Vvwh4v4/sjtAgwQ7pSU9v7LThqe1/j/RBhzd2mbis0r+K1Nn0vHoGTBHmcB54+5hAUdlJoahPD8Gnwo3s6XGi5wElQh8zX9PuocKFpRIDXI01go1TWutsZpef3RivWIMFgyg9nhUEp69BX76qnhXDKIPssasE/UhpU81MjZ+qX7ufVu3HNH6HpXROgOTY+sJdEcF8yAwywBDrIV6Oeo8NehdZCgkU4jt+2FRbDoKpoIsmcbDut4H37L7D0EsYGBxOnwC3yqUJLPWbhD+fF5PD53zglfmJjdVZwei684zKbtVF7ugCIcfiKSX4r0vc6+ryY4BON4dZ2vZSLNavdmPb/bO9yMtZVou74XXza6VfTRhOdDA05vgM63l4lk2XYb9C1g6K3nu0rptbXyFZFZwjJs3ibFocd3Bv1ChgLevtSOor99lqbzzhKUVHX8=
