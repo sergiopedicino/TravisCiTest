@@ -2,7 +2,7 @@ language: python
 python:
 - '3.9'
 branches:
-  only: main
+  only: feature/test
 install:
 - pip install awscli
 - pip install aws-sam-cli
@@ -15,7 +15,7 @@ deploy:
   script: sam deploy --template-file packaged.yaml --stack-name serge-serverless-test
   skip_cleanup: true
   on:
-    branch: master
+    branch: feature/test
 notifications:
   email:
     on_failure: always
