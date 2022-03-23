@@ -8,7 +8,7 @@ install:
 - pip install aws-sam-cli
 script:
 - sam validate
-- sam package --template-file template.yaml --s3-bucket serge-test-23032022 --output-template-file
+- sam package --template-file template.yml --s3-bucket serge-test-23032022 --output-template-file
   packaged.yaml
 deploy:
   provider: script
